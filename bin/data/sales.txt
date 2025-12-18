@@ -1,0 +1,48 @@
+Paracetamol|15-12-2025|25|125.00
+Ibuprofene|15-12-2025|18|157.50
+Amoxicilline|15-12-2025|12|150.00
+Doliprane|15-12-2025|30|195.00
+Aspirine|15-12-2025|45|202.50
+Paracetamol|14-12-2025|32|160.00
+Vitamine C|14-12-2025|28|89.60
+Omeprazole|14-12-2025|15|262.50
+Ibuprofene|14-12-2025|22|192.50
+Amoxicilline|13-12-2025|20|250.00
+Cortisone|13-12-2025|8|180.00
+Paracetamol|13-12-2025|28|140.00
+Doliprane|13-12-2025|35|227.50
+Ciprofloxacine|12-12-2025|16|292.80
+Aspirine|12-12-2025|40|180.00
+Paracetamol|12-12-2025|30|150.00
+Metformine|12-12-2025|25|160.00
+Ibuprofene|11-12-2025|20|175.00
+Vitamine C|11-12-2025|50|160.00
+Paracetamol|11-12-2025|35|175.00
+Doliprane|11-12-2025|28|182.00
+Amoxicilline|10-12-2025|14|175.00
+Cortisone|10-12-2025|10|225.00
+Omeprazole|10-12-2025|18|315.00
+Paracetamol|10-12-2025|38|190.00
+Aspirine|09-12-2025|42|189.00
+Ibuprofene|09-12-2025|24|210.00
+Paracetamol|09-12-2025|30|150.00
+Ciprofloxacine|08-12-2025|12|219.60
+Doliprane|08-12-2025|32|208.00
+Vitamine C|08-12-2025|35|112.00
+Paracetamol|08-12-2025|28|140.00
+Amoxicilline|07-12-2025|18|225.00
+Metformine|07-12-2025|22|140.80
+Aspirine|07-12-2025|48|216.00
+Paracetamol|07-12-2025|33|165.00
+Ibuprofene|06-12-2025|26|227.50
+Cortisone|06-12-2025|12|270.00
+Paracetamol|06-12-2025|40|200.00
+Doliprane|06-12-2025|30|195.00
+Omeprazole|05-12-2025|20|350.00
+Aspirine|05-12-2025|50|225.00
+Paracetamol|05-12-2025|35|175.00
+Vitamine C|05-12-2025|40|128.00
+Ciprofloxacine|04-12-2025|15|274.50
+Ibuprofene|04-12-2025|28|245.00
+Amoxicilline|04-12-2025|16|200.00
+Paracetamol|04-12-2025|32|160.00

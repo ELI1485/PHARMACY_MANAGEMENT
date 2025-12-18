@@ -1,0 +1,10 @@
+Ventoline|15-12-2025|5|Expire
+Tramadol|12-12-2025|3|Defectueux
+Pentazocine|10-12-2025|4|Expire
+Diclofenac|08-12-2025|8|Retour client
+Codeine|05-12-2025|2|Erreur commande
+Fentanyl|03-12-2025|1|Expire
+Naproxene|28-11-2025|6|Defectueux
+Pethidine|25-11-2025|3|Expire
+Morphine|22-11-2025|2|Retour client
+Diazepam|18-11-2025|4|Expire

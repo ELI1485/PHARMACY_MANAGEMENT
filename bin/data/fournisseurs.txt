@@ -1,0 +1,15 @@
+1|LaboMed|0522334455|contact@labomed.ma|12 Rue Mohamed V, Casablanca
+2|LaboMaroc|0522445566|info@labomaroc.ma|45 Avenue Hassan II, Rabat
+3|MediMar|0522556677|ventes@medimar.ma|78 Boulevard Zerktouni, Casablanca
+4|PharmaPlus|0522667788|pharmaplus@gmail.com|23 Rue Allal Ben Abdellah, Fes
+5|MediCare|0522778899|contact@medicare.ma|56 Avenue Mohammed VI, Marrakech
+6|BioLab|0522889900|biolab@biolab.ma|34 Rue Ibn Toumert, Casablanca
+7|LaboPharm|0522990011|info@labopharm.ma|89 Avenue des FAR, Tanger
+8|HealthPlus|0522001122|healthplus@health.ma|67 Boulevard Moulay Youssef, Casablanca
+9|MedExpress|0522112233|contact@medexpress.ma|15 Rue El Jadida, Casablanca
+10|PharmaCare|0522223344|info@pharmacare.ma|28 Avenue Lalla Yacout, Rabat
+11|GlobalMed|0522334466|global@globalmed.ma|41 Rue de la Liberte, Agadir
+12|SantePharma|0522445577|sante@santepharma.ma|52 Boulevard Abdelmoumen, Casablanca
+13|VitaLab|0522556688|contact@vitalab.ma|19 Avenue Mers Sultan, Casablanca
+14|MedicoPlus|0522667799|medico@medicopl us.ma|73 Rue Patrice Lumumba, Rabat
+15|PharmaDistrib|0522778800|distrib@pharmadistrib.ma|36 Boulevard de la Resistance, Casablanca

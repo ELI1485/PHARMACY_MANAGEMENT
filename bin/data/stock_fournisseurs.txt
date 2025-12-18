@@ -1,0 +1,13 @@
+LaboMed|Doliprane|150|45.00
+MediMar|Doliprane|200|43.50
+PharmaCorp|Doliprane|80|46.00
+LaboMed|Amoxicilline|300|120.00
+BioPharm|Amoxicilline|250|118.00
+MediMar|Ibuprofene|180|35.00
+PharmaCorp|Ibuprofene|100|36.50
+LaboMed|Paracetamol|500|20.00
+BioPharm|Paracetamol|400|19.50
+MediMar|Aspirine|220|15.00
+PharmaCorp|Aspirine|180|15.50
+LaboMed|Diclofenac|90|55.00
+BioPharm|Diclofenac|120|54.00
