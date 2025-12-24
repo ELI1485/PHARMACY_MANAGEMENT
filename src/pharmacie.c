@@ -41,6 +41,7 @@ void menu_admin(Admin admin) {
         printf(COLOR_RESET);
         centrer_texte("[7] Mon profile");
         centrer_texte("[8] Gestion des employees");
+        centrer_texte("[9] Voir les fournisseurs");
         printf("\n");
         
         afficher_pied_page();
@@ -50,12 +51,16 @@ void menu_admin(Admin admin) {
         
         // Handle special commands first
         if (choix == -1) {  // 00 = Exit
-            printf(COLOR_GREEN "\n\nDeconnexion reussie !\n\n" COLOR_RESET);
+            clear_screen();
+            afficher_entete();
+            printf(COLOR_GREEN);
+            centrer_texte("");
+            centrer_texte("Deconnexion reussie !");
+            centrer_texte("");
+            centrer_texte("Merci d'avoir utilise MediControl !");
+            centrer_texte("");
+            printf(COLOR_RESET);
             attendre_entree();
-            liberer_liste_medicaments(medicaments);
-            return;
-        }
-        if (choix == 9) {  // 9 = Back
             liberer_liste_medicaments(medicaments);
             return;
         }
@@ -85,6 +90,13 @@ void menu_admin(Admin admin) {
             case 8:
                 menu_gerer_employes(employes, &e_count, admin.nom);
                 break;
+            case 9: {
+                Fournisseur fournisseurs[MAX_FOURNISSEURS];
+                int f_count = 0;
+                charger_fournisseurs(fournisseurs, &f_count);
+                afficher_fournisseurs(fournisseurs, f_count);
+                break;
+            }
             case 0:
                 afficher_entete_complet(admin.nom, "Administrator");
                 printf(COLOR_BLUE);
@@ -201,11 +213,29 @@ void menu_employe(const char *prenom_employe) {
                 break;
             default:
                 if (choix == -1) {  // 00 = Exit
-                    printf(COLOR_GREEN "\n\nDeconnexion reussie !\n\n" COLOR_RESET);
+                    clear_screen();
+                    afficher_entete();
+                    printf(COLOR_GREEN);
+                    centrer_texte("");
+                    centrer_texte("Deconnexion reussie !");
+                    centrer_texte("");
+                    centrer_texte("Merci d'avoir utilise MediControl !");
+                    centrer_texte("");
+                    printf(COLOR_RESET);
                     attendre_entree();
                     liberer_liste_medicaments(medicaments);
                     return;
                 } else if (choix == 9) {  // 9 = Back
+                    clear_screen();
+                    afficher_entete();
+                    printf(COLOR_GREEN);
+                    centrer_texte("");
+                    centrer_texte("Au revoir !");
+                    centrer_texte("");
+                    centrer_texte("Merci d'avoir utilise MediControl !");
+                    centrer_texte("");
+                    printf(COLOR_RESET);
+                    attendre_entree();
                     liberer_liste_medicaments(medicaments);
                     return;
                 }

@@ -12,7 +12,7 @@ void afficher_profil(Admin admin) {
     printf("\t\t• Role : Administrateur\n");
     
     // Lire la date de création depuis un fichier si disponible
-    FILE *info_file = fopen("data/admin_info.txt", "r");
+    FILE *info_file = fopen("bin/data/admin_info.txt", "r");
     if (info_file) {
         char ligne[100];
         while (fgets(ligne, sizeof(ligne), info_file)) {
@@ -29,34 +29,34 @@ void afficher_profil(Admin admin) {
     }
     
     printf(COLOR_YELLOW "\n\t\tStatistiques personnelles :\n\n" COLOR_RESET);
-    // Calculate real statistics from log files
-    int connexions_mois = 0;
-    int actions_aujourdhui = 0;
-    char derniere_action[100] = "Aucune";
     
-    // Get current date
+    // Get current month-year for comparison
     char today[11];
     obtenir_date_du_jour(today);
     
-    // Extract month-year from today (DD-MM-YYYY -> MM-YYYY)
     char mois_courant[8];  // MM-YYYY
     if (strlen(today) >= 10) {
         snprintf(mois_courant, sizeof(mois_courant), "%c%c-%c%c%c%c", 
                  today[3], today[4], today[6], today[7], today[8], today[9]);
     }
     
-    // Count logins this month from user_logins.txt
-    FILE* login_file = fopen("data/user_logins.txt", "r");
+    // Count logins this month from user_logins.txt filtering by "Admin"
+    int connexions_mois = 0;
+    FILE* login_file = fopen("bin/data/user_logins.txt", "r");
     if (login_file) {
-        char date[11], nom[50];
-        while (fscanf(login_file, "%10[^|]|%49[^\n]\n", date, nom) == 2) {
-            if (strcasecmp_custom(nom, admin.nom) == 0) {
-                // Check if login is from current month
-                char mois_login[8];
-                if (strlen(date) >= 10) {
-                    snprintf(mois_login, sizeof(mois_login), "%c%c-%c%c%c%c", 
-                             date[3], date[4], date[6], date[7], date[8], date[9]);
-                    if (strcmp(mois_login, mois_courant) == 0) {
+        char ligne[100];
+        int id;
+        char type[20], datetime[20];
+        
+        while (fscanf(login_file, "%d|%19[^|]|%19[^\n]\n", &id, type, datetime) == 3) {
+            // Check if login is for this admin ID and type is "Admin"
+            if (id == admin.id && strcmp(type, "Admin") == 0) {
+                // Extract month-year from datetime (DD-MM-YYYY HH:MM:SS)
+                if (strlen(datetime) >= 10) {
+                    char log_mois[8];
+                    snprintf(log_mois, sizeof(log_mois), "%c%c-%c%c%c%c",
+                             datetime[3], datetime[4], datetime[6], datetime[7], datetime[8], datetime[9]);
+                    if (strcmp(log_mois, mois_courant) == 0) {
                         connexions_mois++;
                     }
                 }
@@ -65,33 +65,7 @@ void afficher_profil(Admin admin) {
         fclose(login_file);
     }
     
-    // Count actions today and get last action from user_actions.txt
-    FILE* action_file = fopen("data/user_actions.txt", "r");
-    if (action_file) {
-        char date[11], nom[50], action[200];
-        char last_action_temp[200] = "";
-        
-        while (fscanf(action_file, "%10[^|]|%49[^|]|%199[^\n]\n", date, nom, action) == 3) {
-            if (strcasecmp_custom(nom, admin.nom) == 0) {
-                // Check if action is from today
-                if (strcmp(date, today) == 0) {
-                    actions_aujourdhui++;
-                }
-                // Keep track of the last action (file is read sequentially)
-                strcpy(last_action_temp, action);
-            }
-        }
-        
-        if (strlen(last_action_temp) > 0) {
-            strcpy(derniere_action, last_action_temp);
-        }
-        
-        fclose(action_file);
-    }
-    
     printf(COLOR_GREEN "\t\t• Nombre de connexions ce mois : %d\n" COLOR_RESET, connexions_mois);
-    printf(COLOR_GREEN "\t\t• Actions effectuees aujourd'hui : %d\n" COLOR_RESET, actions_aujourdhui);
-    printf(COLOR_GREEN "\t\t• Derniere action : %s\n" COLOR_RESET, derniere_action);
     
     printf("\n");
     attendre_entree();
@@ -143,7 +117,7 @@ void changer_mot_de_passe(Admin *admin) {
     
     // Sauvegarder dans le fichier binaire
     int succes = 0;
-    FILE *file = fopen("data/admins.dat", "r+b");
+    FILE *file = fopen("bin/data/admins.dat", "r+b");
     if (file != NULL) {
         Admin temp;
         while (!feof(file)) {
@@ -169,7 +143,7 @@ void changer_mot_de_passe(Admin *admin) {
         printf(COLOR_GREEN "\n\t\tMot de passe change avec succes !\n" COLOR_RESET);
         
         // Enregistrer le changement dans un fichier journal
-        FILE *log = fopen("data/password_changes.log", "a");
+        FILE *log = fopen("bin/data/password_changes.log", "a");
         if (log != NULL) {
             char date[20];
             time_t t = time(NULL);
@@ -222,8 +196,8 @@ void changer_mot_de_passe_alternative(Admin *admin) {
     }
     
     // Methode alternative : utiliser un fichier temporaire
-    FILE *file = fopen("data/admins.dat", "rb");
-    FILE *temp_file = fopen("data/admins_temp.dat", "wb");
+    FILE *file = fopen("bin/data/admins.dat", "rb");
+    FILE *temp_file = fopen("bin/data/admins_temp.dat", "wb");
     
     if (file == NULL || temp_file == NULL) {
         printf(COLOR_RED "\n\t\tErreur d'acces aux fichiers !\n" COLOR_RESET);
@@ -257,7 +231,7 @@ void changer_mot_de_passe_alternative(Admin *admin) {
         printf(COLOR_GREEN "\n\t\tMot de passe change avec succes !\n" COLOR_RESET);
         
         // Enregistrer dans le journal
-        FILE *log = fopen("data/security.log", "a");
+        FILE *log = fopen("bin/data/security.log", "a");
         if (log) {
             char date[20];
             time_t t = time(NULL);
@@ -301,8 +275,8 @@ void changer_nom_admin(Admin *admin) {
     strcpy(admin->nom, nouveau_nom);
     
     // Sauvegarder dans le fichier binaire via fichier temporaire
-    FILE *file = fopen("data/admins.dat", "rb");
-    FILE *temp_file = fopen("data/admins_temp.dat", "wb");
+    FILE *file = fopen("bin/data/admins.dat", "rb");
+    FILE *temp_file = fopen("bin/data/admins_temp.dat", "wb");
     
     if (file == NULL || temp_file == NULL) {
         strcpy(admin->nom, ancien_nom);  // Restaurer
@@ -328,14 +302,14 @@ void changer_nom_admin(Admin *admin) {
     fclose(temp_file);
     
     if (trouve) {
-        remove("admins.dat");
-        rename("admins_temp.dat", "admins.dat");
+        remove("bin/data/admins.dat");
+        rename("bin/data/admins_temp.dat", "bin/data/admins.dat");
         
         printf(COLOR_GREEN "\n\t\tNom change avec succes : %s -> %s\n" COLOR_RESET, 
                ancien_nom, nouveau_nom);
         
         // Logger le changement
-        FILE *log = fopen("data/security.log", "a");
+        FILE *log = fopen("bin/data/security.log", "a");
         if (log) {
             char date[20];
             time_t t = time(NULL);
@@ -357,7 +331,7 @@ void changer_nom_admin(Admin *admin) {
 void sauvegarder_profil(Admin admin) {
 
     // Cette fonction pourrait etre utilisee pour sauvegarder d'autres infos du profil
-    FILE *info = fopen("data/admin_info.txt", "a");
+    FILE *info = fopen("bin/data/admin_info.txt", "a");
     if (info) {
         char date[20];
         time_t t = time(NULL);
@@ -383,16 +357,16 @@ void menu_profil(Admin *admin) {
         centrer_texte("");
         printf(COLOR_RESET);
         printf(COLOR_WHITE);
-        centrer_texte("1. Voir mon profil");
+        centrer_texte("[1] Voir mon profil");
         printf(COLOR_RESET);
         printf(COLOR_YELLOW);
-        centrer_texte("2. Changer le mot de passe");
+        centrer_texte("[2] Changer le mot de passe");
         printf(COLOR_RESET);
         printf(COLOR_GREEN);
-        centrer_texte("3. Changer le nom");
+        centrer_texte("[3] Changer le nom");
         printf(COLOR_RESET);
         printf(COLOR_BLUE);
-        centrer_texte("4. Retour au menu principal");
+        centrer_texte("[4] Retour au menu principal");
         centrer_texte("");
         printf(COLOR_RESET);
         printf(COLOR_WHITE);

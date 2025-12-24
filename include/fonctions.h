@@ -97,6 +97,7 @@ typedef struct {
     char nom[50];
     char telephone[20];
     char email[50];
+    char adresse[100];
 } Fournisseur;
 
 // Fonctions d'authentification

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/marou/Desktop/TPC/STSTS/src",
-      "program": "c:/Users/marou/Desktop/TPC/STSTS/src/build/Debug/outDebug",
+      "cwd": "c:/Users/marou/Desktop/TPC/PHARMACY_MANAGEMENT",
+      "program": "c:/Users/marou/Desktop/TPC/PHARMACY_MANAGEMENT/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

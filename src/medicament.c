@@ -185,7 +185,7 @@ Medicament* creer_medicament(Medicament* liste) {
 
 // Load medications from file into linked list
 Medicament* charger_medicaments() {
-    FILE* fichier = fopen("data/medicaments.txt", "r");
+    FILE* fichier = fopen("bin/data/medicaments.txt", "r");
     if (!fichier) {
         printf(COLOR_YELLOW "Fichier medicaments.txt introuvable. Creation d'un nouveau fichier.\n" COLOR_RESET);
         return NULL;
@@ -228,7 +228,7 @@ Medicament* charger_medicaments() {
 
 // Save linked list to file
 void sauvegarder_medicaments(Medicament* liste) {
-    FILE* fichier = fopen("data/medicaments.txt", "w");
+    FILE* fichier = fopen("bin/data/medicaments.txt", "w");
     if (!fichier) {
         printf(COLOR_RED " Erreur : Impossible d'ouvrir medicaments.txt\\n" COLOR_RESET);
         return;
@@ -294,7 +294,7 @@ void ajouter_medicament(Medicament** liste) {
     centrer_texte("Appuyez sur Entree pour continuer...");
     printf(COLOR_RESET);
     attendre_entree();
-    return 1;
+    return;
 }
 
 // Modify medication
@@ -302,7 +302,7 @@ void modifier_medicament(Medicament* liste) {
     if (!liste) {
         printf(COLOR_YELLOW "Aucun medicament a modifier.\n" COLOR_RESET);
         attendre_entree();
-        return 0;
+        return;
     }
 
     clear_screen();
@@ -379,7 +379,7 @@ void modifier_medicament(Medicament* liste) {
     centrer_texte("Appuyez sur Entree pour continuer...");
     printf(COLOR_RESET);
     attendre_entree();
-    return 1;
+    return;
 }
 
 // Delete medication with admin password verification
@@ -431,7 +431,7 @@ int supprimer_medicament(Medicament** liste, int est_admin) {
         lire_mot_de_passe(password, 30);
         
         // Check against admin passwords in admins.dat (binary format)
-        FILE* file = fopen("data/admins.dat", "rb");
+        FILE* file = fopen("bin/data/admins.dat", "rb");
         int valid_password = 0;
         if (file) {
             Admin admin;

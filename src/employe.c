@@ -1,11 +1,11 @@
 #include "fonctions.h"
 
 void charger_employes(Employe employes[], int *count) {
-    FILE *file = fopen("data/employes.txt", "r");
+    FILE *file = fopen("bin/data/employes.txt", "r");
     *count = 0;
     
     if (file == NULL) {
-        file = fopen("data/employes.txt", "w");
+        file = fopen("bin/data/employes.txt", "w");
         if (file == NULL) return;
         
         fprintf(file, "1|Bennani|Yassir|Vendeur|15-01-2023|0612345678\n");
@@ -13,25 +13,45 @@ void charger_employes(Employe employes[], int *count) {
         fprintf(file, "3|Zahra|Fatima|Caissiere|10-05-2023|0634567890\n");
         
         fclose(file);
-        file = fopen("data/employes.txt", "r");
+        file = fopen("bin/data/employes.txt", "r");
     }
     
-    while (fscanf(file, "%d|%49[^|]|%49[^|]|%49[^|]|%10[^|]|%14[^\n]\n",
-                  &employes[*count].id,
-                  employes[*count].nom,
-                  employes[*count].prenom,
-                  employes[*count].poste,
-                  employes[*count].date_embauche,
-                  employes[*count].telephone) == 6) {
-        (*count)++;
-        if (*count >= MAX_EMPLOYES) break;
+    char ligne[300];
+    while (fgets(ligne, sizeof(ligne), file) && *count < MAX_EMPLOYES) {
+        // Remove newline
+        ligne[strcspn(ligne, "\n")] = 0;
+        
+        // Skip empty lines
+        if (strlen(ligne) == 0) continue;
+        
+        // Parse line manually to handle empty telephone field
+        int id;
+        char nom[50], prenom[50], poste[50], date[11], tel[15];
+        
+        // Reset tel to empty
+        tel[0] = '\0';
+        
+        // Try to parse with telephone
+        int fields = sscanf(ligne, "%d|%49[^|]|%49[^|]|%49[^|]|%10[^|]|%14[^\n]",
+                           &id, nom, prenom, poste, date, tel);
+        
+        // If 5 fields (no telephone), that's still valid
+        if (fields >= 5) {
+            employes[*count].id = id;
+            strcpy(employes[*count].nom, nom);
+            strcpy(employes[*count].prenom, prenom);
+            strcpy(employes[*count].poste, poste);
+            strcpy(employes[*count].date_embauche, date);
+            strcpy(employes[*count].telephone, tel);
+            (*count)++;
+        }
     }
     
     fclose(file);
 }
 
 void sauvegarder_employes(Employe employes[], int count) {
-    FILE *file = fopen("data/employes.txt", "w");
+    FILE *file = fopen("bin/data/employes.txt", "w");
     
     if (file == NULL) {
         printf(COLOR_RED "\nErreur : Impossible de sauvegarder les employes.\n" COLOR_RESET);
@@ -85,9 +105,13 @@ void ajouter_employe(Employe employes[], int *count) {
     
     printf(COLOR_WHITE "\t\tPoste (1.Vendeur 2.Caissier 3.Pharmacien 4.Autre) : " COLOR_RESET);
     int poste_choix = lire_entier();
+    
     const char *postes[] = {"Vendeur", "Caissier", "Pharmacien", "Autre"};
-    if (poste_choix >= 1 && poste_choix <= 4) {
+    if (poste_choix >= 1 && poste_choix <= 3) {
         strcpy(nouveau.poste, postes[poste_choix - 1]);
+    } else if (poste_choix == 4) {
+        printf(COLOR_WHITE "\t\tEntrez le poste personnalise : " COLOR_RESET);
+        lire_chaine(nouveau.poste, 50);
     } else {
         strcpy(nouveau.poste, "Autre");
     }
@@ -154,9 +178,18 @@ void modifier_employe(Employe employes[], int count) {
     
     printf(COLOR_WHITE "\t\tNouveau poste (1.Vendeur 2.Caissier 3.Pharmacien 4.Autre, 0 pour ne pas modifier) : " COLOR_RESET);
     int poste_choix = lire_entier();
-    if (poste_choix >= 1 && poste_choix <= 4) {
+    if (poste_choix >= 1 && poste_choix <= 3) {
         const char *postes[] = {"Vendeur", "Caissier", "Pharmacien", "Autre"};
         strcpy(employes[index].poste, postes[poste_choix - 1]);
+    } else if (poste_choix == 4) {
+        printf(COLOR_WHITE "\t\tEntrez le poste personnalise : " COLOR_RESET);
+        lire_chaine(employes[index].poste, 50);
+    }
+    
+    printf(COLOR_WHITE "\t\tNouveau telephone (laisser vide pour ne pas modifier) : " COLOR_RESET);
+    lire_chaine(buffer, 15);
+    if (strlen(buffer) > 0) {
+        strcpy(employes[index].telephone, buffer);
     }
     
     sauvegarder_employes(employes, count);
@@ -249,7 +282,7 @@ void envoyer_message_employe() {
     
     printf(COLOR_CYAN "\n\n\t\t=== ENVOYER UN MESSAGE ===\n\n" COLOR_RESET);
     
-    printf(COLOR_WHITE "\t\tDestinataire (1.Tous 2.Vendeurs 3.Caissiers) : " COLOR_RESET);
+    printf(COLOR_WHITE "\t\tDestinataire (1.Tous 2.Vendeurs 3.Caissiers 4.Managers) : " COLOR_RESET);
     int destinataire = lire_entier();
     
     printf(COLOR_WHITE "\t\tSujet du message : " COLOR_RESET);
@@ -263,7 +296,7 @@ void envoyer_message_employe() {
     printf(COLOR_GREEN "\n\t\tMessage envoye avec succes !\n" COLOR_RESET);
     
     // Simuler l'enregistrement du message
-    FILE *file = fopen("data/messages.txt", "a");
+    FILE *file = fopen("bin/data/messages.txt", "a");
     if (file != NULL) {
         char date[11];
         obtenir_date_du_jour(date);
@@ -284,7 +317,20 @@ void afficher_messages_employe(const char *prenom_employe) {
     centrer_texte("");
     printf(COLOR_RESET);
     
-    FILE *file = fopen("data/messages.txt", "r");
+    // Get employee's position
+    Employe employes[MAX_EMPLOYES];
+    int emp_count = 0;
+    charger_employes(employes, &emp_count);
+    
+    char employee_position[50] = "";
+    for (int i = 0; i < emp_count; i++) {
+        if (strcasecmp_custom(employes[i].prenom, prenom_employe) == 0) {
+            strcpy(employee_position, employes[i].poste);
+            break;
+        }
+    }
+    
+    FILE *file = fopen("bin/data/messages.txt", "r");
     if (file == NULL) {
         printf(COLOR_YELLOW);
         centrer_texte("Aucun message.");
@@ -325,7 +371,8 @@ void afficher_messages_employe(const char *prenom_employe) {
     }
     fclose(file);
     
-    // Display messages and identify which ones to keep
+    // Determine if message is for this employee based on position
+    // 1 = Tous, 2 = Vendeurs, 3 = Caissiers, 4 = Managers
     int trouve = 0;
     printf("\n");
     
@@ -333,7 +380,18 @@ void afficher_messages_employe(const char *prenom_employe) {
         // Check if message is from today
         int est_aujourdhui = (strcmp(messages[i].date, today) == 0);
         
-        if (messages[i].destinataire == 1) {  // Messages pour tous
+        int afficher_ce_message = 0;
+        if (messages[i].destinataire == 1) {  // Pour tous
+            afficher_ce_message = 1;
+        } else if (messages[i].destinataire == 2 && strcasecmp_custom(employee_position, "Vendeur") == 0) {
+            afficher_ce_message = 1;
+        } else if (messages[i].destinataire == 3 && strcasecmp_custom(employee_position, "Caissier") == 0) {
+            afficher_ce_message = 1;
+        } else if (messages[i].destinataire == 4 && strcasecmp_custom(employee_position, "Manager") == 0) {
+            afficher_ce_message = 1;
+        }
+        
+        if (afficher_ce_message) {
             printf(COLOR_GREEN "Date: %s\n" COLOR_RESET, messages[i].date);
             printf(COLOR_YELLOW "Sujet: %s\n" COLOR_RESET, messages[i].sujet);
             printf("Message: %s\n", messages[i].message);
@@ -361,7 +419,7 @@ void afficher_messages_employe(const char *prenom_employe) {
     }
     
     // Rewrite file with only today's messages
-    file = fopen("data/messages.txt", "w");
+    file = fopen("bin/data/messages.txt", "w");
     if (file != NULL) {
         for (int i = 0; i < msg_count; i++) {
             if (strcmp(messages[i].date, today) == 0) {

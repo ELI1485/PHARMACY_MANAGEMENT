@@ -78,14 +78,14 @@ int is_date_expired(const char *date_str) {
 
 // Logger une action utilisateur
 void log_user_action(int user_id, const char *user_type, const char *action) {
-    FILE *file = fopen("data/user_actions.txt", "a");
-    if (file == NULL) {
+    FILE *file = fopen("bin/data/user_actions.txt", "a");
+    if (!file) {
         #ifdef _WIN32
-            system("if not exist data mkdir data");
+            system("if not exist bin\\data mkdir bin\\data");
         #else
-            system("mkdir -p data");
+            system("mkdir -p bin/data");
         #endif
-        file = fopen("data/user_actions.txt", "a");
+        file = fopen("bin/data/user_actions.txt", "a");
         if (file == NULL) return;
     }
     
@@ -98,14 +98,14 @@ void log_user_action(int user_id, const char *user_type, const char *action) {
 
 // Logger une connexion
 void log_user_login(int user_id, const char *user_type) {
-    FILE *file = fopen("data/user_logins.txt", "a");
-    if (file == NULL) {
+    FILE *file = fopen("bin/data/user_logins.txt", "a");
+    if (!file) {
         #ifdef _WIN32
-            system("if not exist data mkdir data");
+            system("if not exist bin\\data mkdir bin\\data");
         #else
-            system("mkdir -p data");
+            system("mkdir -p bin/data");
         #endif
-        file = fopen("data/user_logins.txt", "a");
+        file = fopen("bin/data/user_logins.txt", "a");
         if (file == NULL) return;
     }
     
@@ -126,7 +126,7 @@ int charger_categories(Categorie categories[], int max_categories) {
     strcpy(categories[count++].nom, "Anti-inflammatoires");
     
     // Charger les categories personnalisees
-    FILE *file = fopen("data/categories.txt", "r");
+    FILE *file = fopen("bin/data/categories.txt", "r");
     if (file != NULL) {
         char ligne[50];
         while (fgets(ligne, sizeof(ligne), file) && count < max_categories) {
@@ -154,14 +154,14 @@ int charger_categories(Categorie categories[], int max_categories) {
 
 // Sauvegarder une nouvelle categorie
 void sauvegarder_categorie(const char *nom_categorie) {
-    FILE *file = fopen("data/categories.txt", "a");
-    if (file == NULL) {
+    FILE *file = fopen("bin/data/categories.txt", "a");
+    if (!file) {
         #ifdef _WIN32
-            system("if not exist data mkdir data");
+            system("if not exist bin\\data mkdir bin\\data");
         #else
-            system("mkdir -p data");
+            system("mkdir -p bin/data");
         #endif
-        file = fopen("data/categories.txt", "a");
+        file = fopen("bin/data/categories.txt", "a");
         if (file == NULL) return;
     }
     

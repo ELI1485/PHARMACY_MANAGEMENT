@@ -9,7 +9,7 @@ void afficher_gains_jour() {
     centrer_texte("=== GAINS DU JOUR ===");
     printf("\n");
     
-    FILE *file = fopen("data/ventes.txt", "r");
+    FILE *file = fopen("bin/data/ventes.txt", "r");
     if (!file) {
         printf("Aucune vente enregistree.\n");
         attendre_entree();
@@ -49,7 +49,7 @@ void afficher_gains_mensuels() {
     centrer_texte("=== GAINS MENSUELS ===");
     printf("\n");
     
-    FILE *file = fopen("data/ventes.txt", "r");
+    FILE *file = fopen("bin/data/ventes.txt", "r");
     if (!file) {
         printf("Aucune vente.\n");
         attendre_entree();
@@ -85,7 +85,7 @@ void afficher_ventes_jour() {
     centrer_texte("=== VENTES DU JOUR ===");
     printf("\n");
     
-    FILE *file = fopen("data/ventes.txt", "r");
+    FILE *file = fopen("bin/data/ventes.txt", "r");
     if (!file) {
         printf("Aucune vente.\n");
         attendre_entree();
@@ -122,7 +122,7 @@ void afficher_produits_plus_vendus() {
     int qtes[1000] = {0};
     int count = 0;
     
-    FILE *file = fopen("data/ventes.txt", "r");
+    FILE *file = fopen("bin/data/ventes.txt", "r");
     if (!file) {
         printf("Aucune vente.\n");
         attendre_entree();
@@ -213,7 +213,7 @@ void afficher_chiffre_affaires_annuel() {
     centrer_texte("=== CHIFFRE D'AFFAIRES ANNUEL ===");
     printf("\n");
     
-    FILE *file = fopen("data/ventes.txt", "r");
+    FILE *file = fopen("bin/data/ventes.txt", "r");
     if (!file) {
         printf("Aucune vente.\n");
         attendre_entree();

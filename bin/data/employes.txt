@@ -1,3 +1,6 @@
 1|Bennani|Yassir|Vendeur|15-01-2023|0612345678
 2|Alaoui|Karim|Vendeur|20-03-2023|0623456789
-3|Zahra|Fatima|Caissiere|10-05-2023|0634567890
+3|Sabiri|Fatima|Manager|10-05-2023|0634567890
+4|Aazi|Amine|Caissier|30-11-2025|0645678901
+5|Chani|Imane|Vendeur|15-12-2025|0656789012
+6|Moussaoui|Yassin|Vendeur|12-11-2023|0615214558

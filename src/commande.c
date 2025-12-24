@@ -1,12 +1,12 @@
 #include "fonctions.h"
 
 void charger_commandes(Commande commandes[], int *count) {
-    FILE *file = fopen("data/commandes.txt", "r");
+    FILE *file = fopen("bin/data/commandes.txt", "r");
     *count = 0;
     
     if (file == NULL) {
         // Creer un fichier avec quelques donnees d'exemple
-        file = fopen("data/commandes.txt", "w");
+        file = fopen("bin/data/commandes.txt", "w");
         if (file == NULL) return;
         
         char date_aujourdhui[11];
@@ -35,7 +35,7 @@ void charger_commandes(Commande commandes[], int *count) {
     fclose(file);
     
     // Creation de la sauvegarde
-    FILE *backup = fopen("data/commandes.bak", "w");
+    FILE *backup = fopen("bin/data/commandes.bak", "w");
     if (backup) {
         for (int i = 0; i < *count; i++) {
             fprintf(backup, "%s|%d|%s|%d|%s|%s|%s|%d\n",
@@ -53,7 +53,7 @@ void charger_commandes(Commande commandes[], int *count) {
 }
 
 void sauvegarder_commandes(Commande commandes[], int count) {
-    FILE *file = fopen("data/commandes.txt", "w");
+    FILE *file = fopen("bin/data/commandes.txt", "w");
     
     if (file == NULL) {
         printf(COLOR_RED "\nErreur : Impossible de sauvegarder les commandes.\n" COLOR_RESET);
@@ -133,7 +133,7 @@ void passer_commande(Medicament* liste, Commande commandes[], int *c_count, cons
         }
         
         // Verifier si ce fournisseur specifique a la quantite demandee
-        FILE* stock_fournisseurs = fopen("data/stock_fournisseurs.txt", "r");
+        FILE* stock_fournisseurs = fopen("bin/data/stock_fournisseurs.txt", "r");
         int fournisseur_ok = 0;
         int quantite_fournisseur = 0;
         float prix_fournisseur = 0;
@@ -183,7 +183,7 @@ void passer_commande(Medicament* liste, Commande commandes[], int *c_count, cons
             printf(COLOR_RESET);
             printf("\n");
             
-            stock_fournisseurs = fopen("data/stock_fournisseurs.txt", "r");
+            stock_fournisseurs = fopen("bin/data/stock_fournisseurs.txt", "r");
             int fournisseur_trouve = 0;
             
             if (stock_fournisseurs) {

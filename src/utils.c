@@ -12,7 +12,17 @@ void clear_screen() {
 }
 
 void lire_chaine(char *chaine, int taille) {
-    fgets(chaine, taille, stdin);
+    // Clear any leftover characters in input buffer
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF && c != -1) {
+        ungetc(c, stdin);
+        break;
+    }
+    
+    if (fgets(chaine, taille, stdin) == NULL) {
+        chaine[0] = '\0';
+        return;
+    }
     chaine[strcspn(chaine, "\n")] = 0;
 }
 
@@ -20,7 +30,9 @@ int lire_entier() {
     char buffer[100];
     int nombre;
     
-    fgets(buffer, sizeof(buffer), stdin);
+    if (!fgets(buffer, sizeof(buffer), stdin)) {
+        return 0;
+    }
     
     // Remove newline
     buffer[strcspn(buffer, "\n")] = 0;
@@ -32,7 +44,9 @@ int lire_entier() {
     
     while (sscanf(buffer, "%d", &nombre) != 1) {
         printf(COLOR_RED "Veuillez entrer un nombre valide : " COLOR_RESET);
-        fgets(buffer, sizeof(buffer), stdin);
+        if (!fgets(buffer, sizeof(buffer), stdin)) {
+            return 0;
+        }
         buffer[strcspn(buffer, "\n")] = 0;
         
         // Check again for "00"
@@ -228,11 +242,9 @@ void afficher_entete() {
 
 void attendre_entree() {
     printf(COLOR_YELLOW "\n\nAppuyez sur Entree pour continuer..." COLOR_RESET);
-    // Clear input buffer first
+    // Wait for Enter press
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
-    // Now wait for actual Enter press
-    getchar();
 }
 
 // Lire mot de passe avec masquage
@@ -305,6 +317,6 @@ void afficher_pied_page() {
     int largeur = obtenir_largeur_console();
 
     afficher_ligne_separatrice('-', largeur);
-    centrer_texte("[0] Help    [9] Retour    [00] Exit");
+    centrer_texte("[0] Help    [00] Exit");
     afficher_ligne_separatrice('=', largeur);
 }

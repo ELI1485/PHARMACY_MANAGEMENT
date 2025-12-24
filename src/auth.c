@@ -81,9 +81,9 @@ int login_admin(Admin *admin_connecte, int *attempted_id) {
     printf(COLOR_RESET);
     lire_mot_de_passe(password, 30);  // PASSWORD MASKING
     
-    file = fopen("data/admins.dat", "rb");
+    file = fopen("bin/data/admins.dat", "rb");
     if (file == NULL) {
-        file = fopen("data/admins.dat", "wb");
+        file = fopen("bin/data/admins.dat", "wb");
         if (file == NULL) {
             printf(COLOR_RED "\n\t\t\tErreur de creation du fichier admin.\n" COLOR_RESET);
             return 0;
@@ -93,7 +93,7 @@ int login_admin(Admin *admin_connecte, int *attempted_id) {
         fwrite(&admin_defaut, sizeof(Admin), 1, file);
         fclose(file);
         
-        file = fopen("data/admins.dat", "rb");
+        file = fopen("bin/data/admins.dat", "rb");
     }
     
     while (fread(&admin, sizeof(Admin), 1, file)) {
@@ -174,7 +174,7 @@ void bloquer_compte() {
 }
 
 int verifier_compte_bloque(int id) {
-    FILE *file = fopen("data/blocked_admins.txt", "r");
+    FILE *file = fopen("bin/data/blocked_admins.txt", "r");
     if (file == NULL) {
         return 0;
     }
@@ -193,17 +193,17 @@ int verifier_compte_bloque(int id) {
 
 void bloquer_compte_admin(int id) {
     #ifdef _WIN32
-        system("if not exist data mkdir data");
+        system("if not exist bin\\data mkdir bin\\data");
     #else
-        system("mkdir -p data");
+        system("mkdir -p bin/data");
     #endif
     
-    FILE *file = fopen("data/blocked_admins.txt", "a");
+    FILE *file = fopen("bin/data/blocked_admins.txt", "a");
     if (file != NULL) {
         fprintf(file, "%d\n", id);
         fclose(file);
         
-        FILE *log = fopen("data/security.log", "a");
+        FILE *log = fopen("bin/data/security.log", "a");
         if (log) {
             char date[20];
             time_t t = time(NULL);
@@ -216,8 +216,8 @@ void bloquer_compte_admin(int id) {
 }
 
 void debloquer_compte_admin(int id) {
-    FILE *file = fopen("data/blocked_admins.txt", "r");
-    FILE *temp = fopen("data/blocked_admins_temp.txt", "w");
+    FILE *file = fopen("bin/data/blocked_admins.txt", "r");
+    FILE *temp = fopen("bin/data/blocked_admins_temp.txt", "w");
     
     if (file == NULL || temp == NULL) {
         if (file) fclose(file);
@@ -235,10 +235,10 @@ void debloquer_compte_admin(int id) {
     fclose(file);
     fclose(temp);
     
-    remove("data/blocked_admins.txt");
-    rename("data/blocked_admins_temp.txt", "data/blocked_admins.txt");
+    remove("bin/data/blocked_admins.txt");
+    rename("bin/data/blocked_admins_temp.txt", "bin/data/blocked_admins.txt");
     
-    FILE *log = fopen("data/security.log", "a");
+    FILE *log = fopen("bin/data/security.log", "a");
     if (log) {
         char date[20];
         time_t t = time(NULL);

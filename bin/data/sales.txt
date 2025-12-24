@@ -1,3 +1,11 @@
+Paracetamol|24-12-2025|26|130.00
+Ibuprofene|24-12-2025|19|166.25
+Doliprane|24-12-2025|31|201.50
+Aspirine|24-12-2025|42|189.00
+Amoxicilline|24-12-2025|15|187.50
+Vitamine C|24-12-2025|38|121.60
+Omeprazole|24-12-2025|12|210.00
+Paracetamol|17-12-2025|24|120.00
 Paracetamol|15-12-2025|25|125.00
 Ibuprofene|15-12-2025|18|157.50
 Amoxicilline|15-12-2025|12|150.00

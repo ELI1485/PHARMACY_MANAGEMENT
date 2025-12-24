@@ -2,10 +2,9 @@
 201|Paracetamol|Analgesiques|100|5.00|LaboMaroc|30-12-2026
 202|Ibuprofene|Anti-inflammatoires|50|8.75|MediMar|15-03-2025
 103|Ventoline|Bronchodilatateur|0|45.00|PharmaPlus|10-12-2025
-203|Doliprane|Analgesiques|3|6.50|LaboMed|20-01-2025
+203|Doliprane|Analgesiques|45|14.50|LaboMed|25-06-2026
 301|Smecta|Antidiarrhéique|7|12.00|MediMar|05-02-2025
 104|Ciprofloxacine|Antibiotiques|42|18.30|LaboPharm|14-07-2026
-204|Tramadol|Analgesiques|15|9.20|MediCare|08-11-2025
 302|Cortisone|Anti-inflammatoires|33|22.50|BioLab|30-06-2027
 105|Erythromycine|Antibiotiques|28|14.75|PharmaPlus|12-12-2025
 205|Aspirine|Analgesiques|200|4.50|LaboMaroc|18-05-2026
@@ -15,7 +14,7 @@
 107|Augmentin|Antibiotiques|12|34.90|PharmaPlus|17-10-2026
 206|Codeine|Analgesiques|8|15.60|MediCare|29-04-2026
 305|Piroxicam|Anti-inflammatoires|25|19.75|LaboPharm|11-01-2027
-108|Azithromycine|Antibiotiques|31|28.50|BioLab|06-12-2026
+108|Azithromycine|Antibiotiques|81|28.50|BioLab|06-12-2026
 207|Morphine|Analgesiques|5|42.30|PharmaPlus|24-02-2026
 306|Celecoxib|Anti-inflammatoires|47|35.20|MediMar|15-09-2027
 109|Clarithromycine|Antibiotiques|22|31.80|LaboMed|28-08-2026
